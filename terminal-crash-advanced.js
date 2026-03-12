@@ -4,8 +4,8 @@ const errorSound = document.getElementById("errorSound");
 const crashContainer = document.getElementById("crashContainer");
 const endCrash = document.getElementById("endCrash");
 
-// Função de animação "dance"
-function danceAnimation(){
+// Função dance
+function danceAnimation() {
     const steps = ["💃 ","🕺 ","🎵 ","💃 ","🕺 "];
     let i = 0;
     const interval = setInterval(()=>{
@@ -19,8 +19,8 @@ function danceAnimation(){
     }, 200);
 }
 
-// Função de ataque simulado
-function attackSimulate(){
+// Função ataque
+function attackSimulate() {
     const bars = ["[#####-----] 50%","[########--] 80%","[##########] 100%"];
     let i=0;
     const interval = setInterval(()=>{
@@ -37,34 +37,40 @@ function attackSimulate(){
 // Função crash avançada
 function crashAdvanced() {
     endCrash.style.display = "block"; // mostrar botão de voltar
-    let count = 0;
-    const max = 50; // número de imagens
-    const interval = setInterval(()=>{
-        if(count>=max) { clearInterval(interval); return; }
 
-        const img = document.createElement("img");
-        img.src = "bsod.png"; // sua imagem de erro
-        img.classList.add("crashImage");
-
-        // posição aleatória
-        img.style.top = Math.random()*window.innerHeight + "px";
-        img.style.left = Math.random()*window.innerWidth + "px";
-        img.style.width = "30px";
-        img.style.height = "30px";
-        crashContainer.appendChild(img);
-
-        // animação para crescer
+    let maxImages = 50;
+    for(let i=0;i<maxImages;i++){
         setTimeout(()=>{
-            img.style.width = "200px";
-            img.style.height = "200px";
-        }, 50);
+            const img = document.createElement("img");
+            img.src = "bsod.png";
+            img.classList.add("crashImage");
 
-        // toca som
-        errorSound.currentTime = 0;
-        errorSound.play();
+            // Começa pequeno e aleatório
+            let size = 20 + Math.random()*30; // tamanho inicial 20-50px
+            img.style.width = size+"px";
+            img.style.height = size+"px";
+            img.style.top = Math.random()*(window.innerHeight - size) + "px";
+            img.style.left = Math.random()*(window.innerWidth - size) + "px";
+            crashContainer.appendChild(img);
 
-        count++;
-    }, 150);
+            // Toca som
+            errorSound.currentTime = 0;
+            errorSound.play();
+
+            // Anima crescimento e deslocamento aleatório
+            setTimeout(()=>{
+                img.style.transition = "all 2.5s ease";
+                let newSize = 150 + Math.random()*200; // cresce 150-350px
+                img.style.width = newSize+"px";
+                img.style.height = newSize+"px";
+
+                // deslocamento aleatório durante crescimento
+                img.style.top = Math.random()*(window.innerHeight - newSize) + "px";
+                img.style.left = Math.random()*(window.innerWidth - newSize) + "px";
+            },50);
+
+        }, i*150); // pequenas diferenças de tempo para espalhar
+    }
 }
 
 // Comandos
