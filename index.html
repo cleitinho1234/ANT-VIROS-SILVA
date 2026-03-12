@@ -3,16 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Página Divertida</title>
+
+<title>Página</title>
 
 <style>
 
 body{
 margin:0;
-overflow:hidden;
 background:black;
+overflow:hidden;
 font-family:monospace;
+color:white;
 }
+
+/* botão iniciar */
+
+#start{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+padding:20px 40px;
+font-size:22px;
+background:#00ff00;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+/* imagens */
 
 #crashContainer{
 position:fixed;
@@ -29,7 +48,9 @@ height:40px;
 transition:all 2s;
 }
 
-#endCrash{
+/* voltar */
+
+#voltar{
 position:fixed;
 bottom:20px;
 right:20px;
@@ -47,24 +68,29 @@ font-size:18px;
 
 <body>
 
+<button id="start">ENTRAR</button>
+
 <div id="crashContainer"></div>
 
-<button id="endCrash">Voltar</button>
+<button id="voltar">Voltar</button>
 
 <audio id="alerta" src="alerta_ameaca.mp3"></audio>
 
 <script>
 
+const start = document.getElementById("start")
 const container = document.getElementById("crashContainer")
 const alerta = document.getElementById("alerta")
-const voltar = document.getElementById("endCrash")
+const voltar = document.getElementById("voltar")
 
 function iniciar(){
 
-alerta.volume = 1
+start.style.display="none"
+
+alerta.volume=1
 alerta.play()
 
-let total = 50
+let total = 60
 
 for(let i=0;i<total;i++){
 
@@ -72,7 +98,7 @@ setTimeout(()=>{
 
 let img = document.createElement("img")
 
-img.src = "bsod.png"
+img.src="bsod.png"
 img.className="crashImage"
 
 let size = 20 + Math.random()*40
@@ -85,9 +111,13 @@ img.style.left=Math.random()*window.innerWidth+"px"
 
 container.appendChild(img)
 
+/* som erro */
+
 let som = new Audio("error.mp3")
 som.volume=1
 som.play()
+
+/* crescer */
 
 setTimeout(()=>{
 
@@ -98,9 +128,25 @@ img.style.height=big+"px"
 
 },50)
 
-}, i*150)
+}, i*120)
 
 }
+
+/* voz do site depois do audio */
+
+alerta.onended = ()=>{
+
+let msg = new SpeechSynthesisUtterance(
+"Isso é apenas uma brincadeira"
+)
+
+msg.lang="pt-BR"
+
+speechSynthesis.speak(msg)
+
+}
+
+/* liberar botão */
 
 setTimeout(()=>{
 voltar.style.display="block"
@@ -108,7 +154,7 @@ voltar.style.display="block"
 
 }
 
-window.onload=iniciar
+start.onclick=iniciar
 
 voltar.onclick=()=>{
 container.innerHTML=""
