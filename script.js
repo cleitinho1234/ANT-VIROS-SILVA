@@ -8,61 +8,48 @@ const textoSolucao = document.getElementById('texto-solucao');
 const fechar = document.getElementById('fechar');
 const btnCopiar = document.getElementById('btn-copiar');
 
+// Dados dos problemas e soluções detalhadas
 const dados = {
-    "nao-liga": {
-        "Samsung Galaxy S22": [
-            "1️⃣ Pressione o botão de energia por 10 segundos.",
-            "2️⃣ Conecte ao carregador original e aguarde 5 minutos.",
-            "3️⃣ Se ainda não ligar, tente reiniciar forçado segurando volume + power.",
-            "⚠️ Se nada funcionar, procure um técnico autorizado."
-        ],
-        "iPhone 14": [
-            "1️⃣ Pressione e segure o botão lateral + volume por 10 segundos até aparecer o logo da Apple.",
-            "2️⃣ Conecte ao carregador original e aguarde 5 minutos.",
-            "⚠️ Se nada funcionar, leve a um suporte técnico autorizado."
+    "android-xiaomi": {
+        "Modelos Gerais, Redmi, Poco": [
+            "**Superaquecimento e Bateria:** Comum em intermediários (linha Note) e flagships sob uso intenso (jogos/5G), resultando em degradação rápida da bateria.\nSolução: Remova a capa, interrompa jogos pesados, desative 5G se não necessário, feche apps em segundo plano.",
+            "**Bloatware e Performance:** Grande quantidade de apps pré-instalados (Xiaomi/MIUI/HyperOS) gera consumo de memória.\nSolução: Desative ou desinstale apps pré-instalados que não utiliza para melhorar a velocidade.",
+            "**Bugs de Sistema (HyperOS/Android):** Falhas na câmera frontal, travamentos no gerenciamento de arquivos e apps nativos fechando sozinhos.\nSolução: Reinicie o dispositivo e limpe cache de apps.",
+            "**Fim do Suporte:** Alguns modelos (Redmi Note 12, Poco X5) perderão atualizações de segurança em 2026.\nSolução: Atualize para a versão mais recente do sistema enquanto disponível ou considere substituir o aparelho futuramente.",
+            "⚠️ Se nada funcionar, leve o dispositivo a um técnico autorizado."
         ]
     },
-    "tela-travando": {
-        "Samsung Galaxy S22": [
-            "1️⃣ Reinicie o aparelho.",
-            "2️⃣ Limpe cache do sistema em Configurações > Armazenamento.",
-            "3️⃣ Feche apps pesados que rodam em segundo plano.",
-            "⚠️ Se o problema persistir, procure um técnico."
-        ],
-        "iPhone 14": [
-            "1️⃣ Reinicie o aparelho.",
-            "2️⃣ Atualize o iOS em Ajustes > Geral > Atualização de Software.",
-            "3️⃣ Feche apps desnecessários.",
-            "⚠️ Se continuar travando, leve a um suporte autorizado."
+    "iphone": {
+        "iPhone 13-15 e Outros": [
+            "**Drenagem de Bateria (Pós-update):** Comum após atualizações do iOS 26.\nSolução: Verifique apps que consomem mais energia, reinicie o aparelho e ative modo baixo consumo.",
+            "**Falhas de Conexão:** Problemas com CarPlay, Wi-Fi, Bluetooth e erros de 'Nenhum SIM Instalado'.\nSolução: Reinicie o aparelho, redefina ajustes de rede em Ajustes > Geral > Redefinir.",
+            "**Tela Colorida da Morte:** Relatada em iPhone 13, a tela exibe cor sólida e trava.\nSolução: Reinicie, se persistir, procurar assistência técnica.",
+            "**Lentidão e Travamento:** iPhone 15 e anteriores podem apresentar lags, Face ID falhando.\nSolução: Atualize para a versão mais recente do iOS e reinicie.",
+            "⚠️ Se nada funcionar, leve o dispositivo a um técnico autorizado."
         ]
     },
-    "bateria": {
-        "Samsung Galaxy S22": [
-            "1️⃣ Reduza o brilho da tela.",
-            "2️⃣ Feche aplicativos em segundo plano.",
-            "3️⃣ Ative o modo de economia de bateria.",
-            "⚠️ Se mesmo assim descarregar rápido, consulte um técnico."
-        ],
-        "iPhone 14": [
-            "1️⃣ Ative o modo de baixo consumo.",
-            "2️⃣ Verifique apps que gastam muita bateria.",
-            "3️⃣ Ajuste brilho automático.",
-            "⚠️ Se continuar com problema, procure suporte autorizado."
+    "comum-ambos": {
+        "Android & iOS": [
+            "**Falhas de Hardware:** Problemas na tela (toque fantasma, manchas) devido a quedas ou defeitos de fabricação.\nSolução: Leve a assistência autorizada.",
+            "**Botão Power/Conexão:** Dificuldades no botão de energia e oxidação/sujeira na porta de carregamento (USB-C).\nSolução: Limpe a porta com cuidado e use assistência se persistir.",
+            "**Vulnerabilidades de Segurança:** Riscos de execução remota de código em componentes de áudio.\nSolução: Mantenha o sistema atualizado e instale patches de segurança.",
+            "⚠️ Se nada funcionar, procure um técnico autorizado imediatamente."
         ]
     }
 };
 
-// Modal
+// Função para mostrar o modal
 function mostrarModal(lista) {
     textoSolucao.innerHTML = lista.map(item => `<p>${item}</p>`).join('');
     modal.style.display = "block";
 }
 
-fechar.onclick = function() { modal.style.display = "none"; }
-window.onclick = function(event) { if(event.target==modal) modal.style.display="none"; }
+// Fechar modal
+fechar.onclick = () => { modal.style.display = "none"; }
+window.onclick = (event) => { if(event.target==modal) modal.style.display="none"; }
 
 // Copiar solução
-btnCopiar.onclick = function() {
+btnCopiar.onclick = () => {
     const text = textoSolucao.innerText;
     navigator.clipboard.writeText(text).then(()=> alert("Solução copiada!"));
 }
