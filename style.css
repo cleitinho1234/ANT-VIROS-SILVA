@@ -2,8 +2,9 @@ body, html {
     margin:0;
     padding:0;
     height:100%;
-    overflow:hidden; /* impede scroll do canvas */
+    overflow:hidden;
     font-family: monospace;
+    color:white;
 }
 
 #matrix {
@@ -12,6 +13,13 @@ body, html {
     left:0;
     width:100%;
     height:100%;
-    z-index: -1; /* fica atrás do conteúdo */
+    z-index: -1; /* fundo */
     background: black;
+}
+
+header {
+    position: relative;
+    z-index: 1; /* acima do canvas */
+    text-align:center;
+    margin-top:50px;
 }
