@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hacker Simulator - Terminal</title>
+<title>Hacker Simulator - Terminal Crash</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,19 +11,17 @@
 
     <header>
         <h1>Terminal Hacker</h1>
-        <p>Digite comandos ou copie manualmente os códigos do lado.</p>
+        <p>Digite comandos ou experimente os códigos ao lado.</p>
     </header>
 
     <div id="container">
-        <!-- Terminal flutuante -->
         <div id="terminal">
             <div id="output"></div>
             <input type="text" id="input" placeholder="Digite um comando...">
         </div>
 
-        <!-- Códigos para copiar -->
         <div id="codes">
-            <h3>Códigos para copiar e experimentar:</h3>
+            <h3>Códigos para testar:</h3>
             <pre>$ echo "Hello World"</pre>
             <pre>$ date</pre>
             <pre>$ whoami</pre>
@@ -32,14 +30,18 @@
             <pre>$ dance</pre>
             <pre>$ attack simulate</pre>
             <pre>$ matrix</pre>
+            <pre>$ crash</pre>
             <pre>$ clear</pre>
         </div>
     </div>
+
+    <!-- Áudio de erro -->
+    <audio id="errorSound" src="error.mp3" preload="auto"></audio>
 
     <script>
         let matrixColor = "#00FFFF"; // azul
     </script>
     <script src="matrix.js"></script>
-    <script src="terminal.js"></script>
+    <script src="terminal-crash.js"></script>
 </body>
 </html>
