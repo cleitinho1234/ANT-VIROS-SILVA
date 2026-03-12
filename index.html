@@ -5,40 +5,99 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Página Inofensiva</title>
 <style>
-body, html {margin:0;padding:0;height:100%;overflow:hidden;background:black;font-family: monospace;color:white;}
-.fakeBar {position: fixed; left:50%; transform:translateX(-50%); width:90%; background:#333; color:white; padding:10px; border-radius:5px; text-align:center; pointer-events:none; font-size:14px; z-index:10001;}
+body, html {
+    margin:0;
+    padding:0;
+    height:100%;
+    overflow:hidden;
+    background:black;
+    font-family: monospace;
+    color:white;
+}
+/* Barra de endereço falsa */
+.fakeBar {
+    position: fixed;
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    background:#333;
+    color:white;
+    padding:10px;
+    border-radius:5px;
+    text-align:center;
+    pointer-events:none;
+    font-size:14px;
+    z-index:10001;
+}
 #fakeBarTop {top:10px;}
 #fakeBarMiddle {top:50%; transform: translate(-50%, -50%);}
-#crashContainer {position: fixed; top:0; left:0; width:100%; height:100%; z-index:9999; pointer-events:none;}
-.crashImage {position: absolute;width:50px;height:50px;opacity:0.8;transition: all 2.5s ease;}
-#endCrash {position: fixed; bottom:20px; right:20px; z-index:10000; padding:15px; font-size:18px; background:red; color:white; border:none; border-radius:10px; cursor:pointer; display:none;}
+#crashContainer {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:9999;
+    pointer-events:none;
+}
+.crashImage {
+    position: absolute;
+    width:50px;
+    height:50px;
+    opacity:0.8;
+    transition: all 2.5s ease;
+}
+#endCrash {
+    position: fixed;
+    bottom:20px;
+    right:20px;
+    z-index:10000;
+    padding:15px;
+    font-size:18px;
+    background:red;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    display:none;
+}
 </style>
 </head>
 <body>
 
+<!-- Barras de endereço falsas -->
 <div class="fakeBar" id="fakeBarTop">www.seusitepegadinha.com</div>
 <div class="fakeBar" id="fakeBarMiddle">www.seusitepegadinha.com</div>
 
+<!-- Container de crash -->
 <div id="crashContainer"></div>
+
+<!-- Botão de voltar -->
 <button id="endCrash">⬆ Voltar</button>
 
+<!-- Áudio de erro -->
 <audio id="errorSound" src="error.mp3" preload="auto"></audio>
 
+<!-- Áudio da ameaça -->
+<audio id="threatSound" src="alerta_ameaca.mp3" preload="auto"></audio>
+
 <script>
-// elementos
 const crashContainer = document.getElementById("crashContainer");
 const endCrash = document.getElementById("endCrash");
 const errorSound = document.getElementById("errorSound");
+const threatSound = document.getElementById("threatSound");
 
-// Função de crash automático com som por imagem
+// Função de pegadinha automática
 function crashPrank() {
     let maxImages = 50;
+
     for(let i=0;i<maxImages;i++){
         setTimeout(()=>{
             const img = document.createElement("img");
-            img.src = "bsod.png"; 
+            img.src = "bsod.png"; // imagem de erro
             img.classList.add("crashImage");
 
+            // posição e tamanho inicial aleatório
             let size = 20 + Math.random()*30;
             img.style.width = size+"px";
             img.style.height = size+"px";
@@ -46,12 +105,12 @@ function crashPrank() {
             img.style.left = Math.random()*(window.innerWidth - size) + "px";
             crashContainer.appendChild(img);
 
-            // dispara som individual
+            // toca som de erro individual
             const audio = new Audio("error.mp3");
             audio.volume = 0.5;
             audio.play();
 
-            // anima crescimento e deslocamento
+            // anima crescimento e deslocamento aleatório
             setTimeout(()=>{
                 let newSize = 150 + Math.random()*200;
                 img.style.width = newSize+"px";
@@ -59,24 +118,15 @@ function crashPrank() {
                 img.style.top = Math.random()*(window.innerHeight - newSize) + "px";
                 img.style.left = Math.random()*(window.innerWidth - newSize) + "px";
             },50);
+
         }, i*150);
     }
 
-    // botão aparecer após 50s
+    // dispara áudio da ameaça imediatamente
+    threatSound.play();
+
+    // botão aparecer somente após 50s
     setTimeout(()=>{ endCrash.style.display = "block"; }, 50000);
-
-    // dispara voz de alerta falsa
-    setTimeout(()=>{ triggerVoiceAlert(); }, 1000);
-}
-
-// Função de alerta em voz alta
-function triggerVoiceAlert() {
-    if('speechSynthesis' in window){
-        const message = "Atenção! Uma ameaça foi detectada. Sua senha e seu e-mail foram descobertos!";
-        const utterance = new SpeechSynthesisUtterance(message);
-        utterance.lang = "pt-BR";
-        speechSynthesis.speak(utterance);
-    }
 }
 
 // botão para encerrar pegadinha
@@ -85,9 +135,9 @@ endCrash.addEventListener("click", ()=>{
     endCrash.style.display="none";
 });
 
-// inicia pegadinha automaticamente
+// inicia pegadinha automaticamente ao abrir a página
 window.onload = crashPrank;
-
 </script>
+
 </body>
 </html>
