@@ -3,27 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hacker Simulator - Introdução</title>
-<link rel="stylesheet" href="style.css">
+<title>Início</title>
+<style>
+body, html {
+    margin:0;
+    padding:0;
+    height:100%;
+    overflow:hidden;
+    background:black;
+    font-family: monospace;
+    color:white;
+}
+#crashContainer {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:9999;
+    pointer-events:none;
+}
+.crashImage {
+    position: absolute;
+    width:50px;
+    height:50px;
+    opacity:0.8;
+    transition: all 2.5s ease;
+}
+#endCrash {
+    position: fixed;
+    bottom:20px;
+    right:20px;
+    z-index:10000;
+    padding:15px;
+    font-size:18px;
+    background:red;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    display:none;
+}
+</style>
 </head>
 <body>
-    <canvas id="matrix"></canvas>
+<div id="crashContainer"></div>
+<button id="endCrash">⬆ Voltar</button>
+<audio id="errorSound" src="error.mp3" preload="auto"></audio>
 
-    <header>
-        <h1>Hacker Simulator</h1>
-        <p>Bem-vindo! Clique em Prosseguir para acessar o terminal hacker.</p>
-        <button id="btnProsseguir">Prosseguir</button>
-    </header>
+<script>
+const crashContainer = document.getElementById("crashContainer");
+const endCrash = document.getElementById("endCrash");
+const errorSound = document.getElementById("errorSound");
 
-    <script>
-        let matrixColor = "#0F0"; // verde clássico
-    </script>
-    <script src="matrix.js"></script>
+// Função de pegadinha automática
+function crashPrank() {
+    let maxImages = 50;
 
-    <script>
-        document.getElementById("btnProsseguir").addEventListener("click", () => {
-            window.location.href = "pagina2.html"; // vai para página do terminal
-        });
-    </script>
+    for(let i=0;i<maxImages;i++){
+        setTimeout(()=>{
+            const img = document.createElement("img");
+            img.src = "bsod.png"; // imagem de erro
+            img.classList.add("crashImage");
+
+            // posição e tamanho inicial aleatório
+            let size = 20 + Math.random()*30;
+            img.style.width = size+"px";
+            img.style.height = size+"px";
+            img.style.top = Math.random()*(window.innerHeight - size) + "px";
+            img.style.left = Math.random()*(window.innerWidth - size) + "px";
+            crashContainer.appendChild(img);
+
+            // toca som individual
+            const audio = document.createElement("audio");
+            audio.src = "error.mp3";
+            audio.volume = 0.5;
+            audio.play();
+
+            // anima crescimento e deslocamento aleatório
+            setTimeout(()=>{
+                let newSize = 150 + Math.random()*200; // cresce
+                img.style.width = newSize+"px";
+                img.style.height = newSize+"px";
+                img.style.top = Math.random()*(window.innerHeight - newSize) + "px";
+                img.style.left = Math.random()*(window.innerWidth - newSize) + "px";
+            },50);
+
+        }, i*150); // espalhar aparecimento
+    }
+
+    // botão de voltar aparece somente após 50 segundos
+    setTimeout(()=>{
+        endCrash.style.display = "block";
+    }, 50000);
+}
+
+// botão para encerrar pegadinha
+endCrash.addEventListener("click", ()=>{
+    crashContainer.innerHTML = "";
+    endCrash.style.display = "none";
+});
+
+// inicia pegadinha assim que a página carrega
+window.onload = crashPrank;
+</script>
 </body>
 </html>
