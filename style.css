@@ -90,21 +90,38 @@ header {
     text-align:center;
 }
 
-/* Tela de crash full-screen */
-#crashScreen {
+/* Container de imagens do crash */
+#crashContainer {
     position: fixed;
     top:0;
     left:0;
     width:100%;
     height:100%;
-    background:black;
-    display:none;
     z-index:9999;
-    justify-content:center;
-    align-items:center;
+    pointer-events:none;
 }
 
-#crashScreen img {
-    width:80%;
-    height:auto;
+/* Cada imagem de erro */
+.crashImage {
+    position: absolute;
+    width:50px;
+    height:50px;
+    opacity:0.8;
+    transition: all 3s ease;
+}
+
+/* Botão para encerrar crash */
+#endCrash {
+    position: fixed;
+    bottom:20px;
+    right:20px;
+    z-index:10000;
+    padding:15px;
+    font-size:18px;
+    background:red;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    display:none;
 }
