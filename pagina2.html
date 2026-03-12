@@ -3,20 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hacker Simulator - Azul</title>
+<title>Hacker Simulator - Terminal</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <canvas id="matrix"></canvas>
 
     <header>
-        <h1>Hacker Simulator - Azul</h1>
-        <p>Simulador hacker com códigos azuis.</p>
+        <h1>Terminal Hacker</h1>
+        <p>Digite comandos ou copie os códigos do lado e pressione Enter.</p>
     </header>
+
+    <div id="container">
+        <div id="terminal">
+            <div id="output"></div>
+            <input type="text" id="input" placeholder="Digite um comando...">
+        </div>
+        <div id="codes">
+            <h3>Códigos para copiar e colar:</h3>
+            <pre>echo "Hello World"</pre>
+            <pre>date</pre>
+            <pre>whoami</pre>
+            <pre>pwd</pre>
+            <pre>uptime</pre>
+        </div>
+    </div>
 
     <script>
         let matrixColor = "#00FFFF"; // azul
     </script>
     <script src="matrix.js"></script>
+    <script src="terminal.js"></script>
 </body>
 </html>
