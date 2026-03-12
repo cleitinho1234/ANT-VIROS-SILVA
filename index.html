@@ -128,6 +128,8 @@ function iniciar(){
       const msg=new SpeechSynthesisUtterance("SEU EMAIL E SENHA FORAM ESPOSTOS!")
       msg.lang="pt-BR"
       msg.rate=0.9
+      msg.volume = 1.0;
+      
       speechSynthesis.speak(msg)
     }
     // mostra notificação 2s depois
