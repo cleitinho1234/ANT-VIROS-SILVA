@@ -122,7 +122,7 @@ function iniciar(){
   alerta.onended = ()=>{
     if('speechSynthesis' in window){
       const msg = new SpeechSynthesisUtterance(
-        "Calma! Isso é apenas uma brincadeira, você está seguro!"
+        "ALERTA SEU EMAIL E SENHA FORAM ESPOSTOS!"
       )
       msg.lang="pt-BR"
       msg.rate = 0.9
