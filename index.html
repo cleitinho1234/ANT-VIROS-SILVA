@@ -3,163 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Página</title>
-
+<title>Página Divertida</title>
 <style>
-
 body{
-margin:0;
-background:black;
-overflow:hidden;
-font-family:monospace;
-color:white;
+  margin:0;
+  background:black;
+  overflow:hidden;
+  font-family:monospace;
+  color:white;
 }
 
 /* botão iniciar */
-
 #start{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-padding:20px 40px;
-font-size:22px;
-background:#00ff00;
-border:none;
-border-radius:10px;
-cursor:pointer;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  padding:20px 40px;
+  font-size:22px;
+  background:#00ff00;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  z-index:100;
 }
 
-/* imagens */
-
+/* container de imagens */
 #crashContainer{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
 }
 
+/* imagens de erro */
 .crashImage{
-position:absolute;
-width:40px;
-height:40px;
-transition:all 2s;
+  position:absolute;
+  width:40px;
+  height:40px;
+  transition:all 2s;
 }
 
-/* voltar */
-
+/* botão voltar */
 #voltar{
-position:fixed;
-bottom:20px;
-right:20px;
-background:red;
-color:white;
-padding:15px;
-border:none;
-border-radius:10px;
-display:none;
-font-size:18px;
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:red;
+  color:white;
+  padding:15px;
+  border:none;
+  border-radius:10px;
+  display:none;
+  font-size:18px;
 }
-
 </style>
 </head>
-
 <body>
 
 <button id="start">ENTRAR</button>
-
 <div id="crashContainer"></div>
-
 <button id="voltar">Voltar</button>
 
-<audio id="alerta" src="alerta_ameaca.mp3"></audio>
+<!-- Áudios -->
+<audio id="alerta" src="alerta_ameaca.mp3" preload="auto"></audio>
+<audio id="errorSound" src="error.mp3" preload="auto"></audio>
 
 <script>
-
 const start = document.getElementById("start")
 const container = document.getElementById("crashContainer")
 const alerta = document.getElementById("alerta")
 const voltar = document.getElementById("voltar")
+const errorSound = document.getElementById("errorSound")
 
 function iniciar(){
 
-start.style.display="none"
+  start.style.display="none"
 
-alerta.volume=1
-alerta.play()
+  // toca alerta_ameaca
+  alerta.volume = 1
+  alerta.play()
 
-let total = 60
+  let total = 50
 
-for(let i=0;i<total;i++){
+  for(let i=0;i<total;i++){
+    setTimeout(()=>{
+      const img = document.createElement("img")
+      img.src="bsod.png"
+      img.className="crashImage"
 
-setTimeout(()=>{
+      let size = 20 + Math.random()*40
+      img.style.width = size + "px"
+      img.style.height = size + "px"
+      img.style.top = Math.random()*window.innerHeight + "px"
+      img.style.left = Math.random()*window.innerWidth + "px"
 
-let img = document.createElement("img")
+      container.appendChild(img)
 
-img.src="bsod.png"
-img.className="crashImage"
+      // toca som de erro individual
+      const som = new Audio("error.mp3")
+      som.volume = 1
+      som.play()
 
-let size = 20 + Math.random()*40
+      // anima crescimento
+      setTimeout(()=>{
+        let big = 150 + Math.random()*200
+        img.style.width = big + "px"
+        img.style.height = big + "px"
+        img.style.top = Math.random()*(window.innerHeight - big) + "px"
+        img.style.left = Math.random()*(window.innerWidth - big) + "px"
+      },50)
 
-img.style.width=size+"px"
-img.style.height=size+"px"
+    }, i*150)
+  }
 
-img.style.top=Math.random()*window.innerHeight+"px"
-img.style.left=Math.random()*window.innerWidth+"px"
+  // fala em voz alta após o alerta terminar
+  alerta.onended = ()=>{
+    if('speechSynthesis' in window){
+      const msg = new SpeechSynthesisUtterance(
+        "Calma! Isso é apenas uma brincadeira, você está seguro!"
+      )
+      msg.lang="pt-BR"
+      msg.rate = 0.9
+      speechSynthesis.speak(msg)
+    }
+  }
 
-container.appendChild(img)
-
-/* som erro */
-
-let som = new Audio("error.mp3")
-som.volume=1
-som.play()
-
-/* crescer */
-
-setTimeout(()=>{
-
-let big = 200 + Math.random()*200
-
-img.style.width=big+"px"
-img.style.height=big+"px"
-
-},50)
-
-}, i*120)
-
+  // libera botão voltar após 50 segundos
+  setTimeout(()=>{ voltar.style.display = "block" }, 50000)
 }
 
-/* voz do site depois do audio */
+start.onclick = iniciar
 
-alerta.onended = ()=>{
-
-let msg = new SpeechSynthesisUtterance(
-"Isso é apenas uma brincadeira"
-)
-
-msg.lang="pt-BR"
-
-speechSynthesis.speak(msg)
-
+voltar.onclick = ()=>{
+  container.innerHTML = ""
+  voltar.style.display = "none"
+  start.style.display = "block"
 }
-
-/* liberar botão */
-
-setTimeout(()=>{
-voltar.style.display="block"
-},50000)
-
-}
-
-start.onclick=iniciar
-
-voltar.onclick=()=>{
-container.innerHTML=""
-}
-
 </script>
 
 </body>
