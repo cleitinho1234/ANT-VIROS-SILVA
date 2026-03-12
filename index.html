@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hacker Simulator - Verde</title>
+<title>Hacker Simulator - Introdução</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,12 +11,19 @@
 
     <header>
         <h1>Hacker Simulator</h1>
-        <p>Simulador hacker estilo Matrix clássico.</p>
+        <p>Bem-vindo! Clique em Prosseguir para acessar o terminal hacker.</p>
+        <button id="btnProsseguir">Prosseguir</button>
     </header>
 
     <script>
         let matrixColor = "#0F0"; // verde clássico
     </script>
     <script src="matrix.js"></script>
+
+    <script>
+        document.getElementById("btnProsseguir").addEventListener("click", () => {
+            window.location.href = "pagina2.html"; // vai para página do terminal
+        });
+    </script>
 </body>
 </html>
