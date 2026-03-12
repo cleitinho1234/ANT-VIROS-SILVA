@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hacker Simulator - Terminal Crash</title>
+<title>Hacker Simulator - Terminal Crash Avançado</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -35,18 +35,19 @@
         </div>
     </div>
 
-    <!-- Som de erro -->
+    <!-- Áudio de erro -->
     <audio id="errorSound" src="error.mp3" preload="auto"></audio>
 
-    <!-- Tela de crash com imagem -->
-    <div id="crashScreen">
-        <img src="bsod.png" alt="Erro" id="crashImage">
-    </div>
+    <!-- Container de imagens de erro do crash -->
+    <div id="crashContainer"></div>
+
+    <!-- Botão para encerrar crash -->
+    <button id="endCrash">⬆ Voltar</button>
 
     <script>
         let matrixColor = "#00FFFF"; // azul
     </script>
     <script src="matrix.js"></script>
-    <script src="terminal-final.js"></script>
+    <script src="terminal-crash-advanced.js"></script>
 </body>
 </html>
